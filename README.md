@@ -1,6 +1,6 @@
-# 🚗 IoT-Based Vehicle Emission Monitor, PUC Renewal & RTO Notification System
+#  IoT-Based Vehicle Emission Monitor, PUC Renewal & RTO Notification System
 
-## 📌 Project Overview
+##  Project Overview
 
 An IoT-based smart vehicle emission monitoring system developed to monitor harmful exhaust gases in real time, automate PUC renewal reminders, and enable RTO-based emission violation tracking.
 
@@ -8,7 +8,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 🎯 Objectives
+##  Objectives
 
 - Detect harmful gases like CO, CO₂, and NOx
 - Monitor real-time vehicle emission levels
@@ -21,7 +21,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## ⚙️ Hardware Components Used
+##  Hardware Components Used
 
 - **ESP32 (WiFi + Bluetooth Microcontroller)**
 - **MQ-135 Gas Sensor** (CO₂ and NOx detection)
@@ -38,7 +38,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 💻 Software & Technologies Used
+##  Software & Technologies Used
 
 - **PlatformIO / Arduino IDE**
 - **Embedded C++ Programming**
@@ -51,32 +51,32 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 🧠 System Architecture
+##  System Architecture
 
-### 1️⃣ Emission Detection Layer
+### 1️ Emission Detection Layer
 - Gas sensors continuously monitor exhaust gases.
 - Analog values read using ESP32 ADC.
 - Sensor warm-up and calibration performed.
 
-### 2️⃣ Decision & Processing Layer
+### 2️ Decision & Processing Layer
 - Threshold-based emission classification:
   - SAFE
   - WARNING
   - DANGER
 - LED indicators and LCD display updated in real time.
 
-### 3️⃣ Notification Layer
+### 3️ Notification Layer
 - SMS alerts sent using SIM900A GSM module.
 - Automated PUC renewal reminder messages.
 - Over-emission warning alerts to vehicle owner.
 
-### 4️⃣ Location Tracking Layer
+### 4️ Location Tracking Layer
 - GPS module fetches real-time coordinates.
 - Location data can be used for RTO-level emission tracking.
 
 ---
 
-## 📊 Features Implemented
+##  Features Implemented
 
 - Real-time gas concentration monitoring
 - Multi-sensor integration (MQ-135, MQ-7, MQ-3)
@@ -91,7 +91,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 🔄 Working Flow
+##  Working Flow
 
 1. Vehicle ignition ON.
 2. Sensors warm up and begin gas detection.
@@ -106,7 +106,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 🚀 Key Achievements
+##  Key Achievements
 
 - Successfully built and demonstrated a working prototype.
 - Integrated GSM and GPS modules with ESP32.
@@ -128,7 +128,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 📈 Future Improvements
+##  Future Improvements
 
 - Cloud-based emission data logging
 - Mobile application dashboard
@@ -139,7 +139,7 @@ This system integrates ESP32, multiple gas sensors, GSM, and GPS modules to crea
 
 ---
 
-## 👨‍💻 Academic Project Details
+##  Academic Project Details
 
 - Developed as a B.Tech IoT-based innovation project
 - Focused on solving real-world environmental pollution issues
