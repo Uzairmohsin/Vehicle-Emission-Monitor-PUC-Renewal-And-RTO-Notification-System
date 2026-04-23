@@ -5,34 +5,34 @@
 #include <HTTPClient.h>
 #include <HardwareSerial.h>
 
-// LCD
+// ================= LCD =================
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-// GSM
+// ================= GSM =================
 HardwareSerial gsm(2);
 String phoneNumber = "+917057741353";
 
-// Pins
+// ================= PINS =================
 #define MQ135_PIN 34
 #define GREEN_LED 18
 #define RED_LED 23
 
-// WiFi Credentials
+// ================= WiFi =================
 const char* ssid = "MITWPU-EXAM";
 const char* password = "MIT#wPu@EXam2603";
 
-// ThingSpeak Settings
-String apiKey = "H0U522DVFIPMJ192";
+// ================= ThingSpeak =================
+String apiKey = "EL02A2GTGJEAT4OW";
 const char* server = "http://api.thingspeak.com/update";
 
-// State tracking (to avoid SMS spam)
+// ================= STATE TRACKING =================
 int lastState = -1;
 
-// 🔧 SMS Function
+// ================= SMS FUNCTION =================
 void sendSMS(String message) {
   Serial.println("Sending SMS...");
 
-  gsm.println("AT+CMGF=1"); // Text mode
+  gsm.println("AT+CMGF=1");
   delay(1000);
 
   gsm.print("AT+CMGS=\"");
@@ -50,25 +50,32 @@ void sendSMS(String message) {
   Serial.println("SMS Sent");
 }
 
+// ================= SETUP =================
 void setup() {
 
   Serial.begin(115200);
+
+  // I2C
   Wire.begin(21, 22);
 
-  // GSM init
-  gsm.begin(9600, SERIAL_8N1, 16, 17); // RX, TX
+  // GSM INIT
+  gsm.begin(9600, SERIAL_8N1, 16, 17);
   delay(3000);
+
   gsm.println("AT");
   delay(1000);
+
   gsm.println("AT+CMGF=1");
   delay(1000);
 
+  // LED SETUP
   pinMode(GREEN_LED, OUTPUT);
   pinMode(RED_LED, OUTPUT);
 
   digitalWrite(GREEN_LED, LOW);
   digitalWrite(RED_LED, LOW);
 
+  // LCD INIT
   lcd.init();
   lcd.backlight();
   lcd.clear();
@@ -76,6 +83,7 @@ void setup() {
   lcd.setCursor(0,0);
   lcd.print("Connecting WiFi");
 
+  // WIFI CONNECT
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -83,7 +91,8 @@ void setup() {
     Serial.print(".");
   }
 
-  Serial.println("WiFi Connected!");
+  Serial.println("\nWiFi Connected!");
+
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("WiFi Connected");
@@ -91,6 +100,7 @@ void setup() {
   lcd.clear();
 }
 
+// ================= LOOP =================
 void loop() {
 
   int gasValue = analogRead(MQ135_PIN);
@@ -101,7 +111,7 @@ void loop() {
 
   lcd.setCursor(0, 0);
 
-  // ✅ SAFE
+  // ================= SAFE =================
   if (gasValue < 1500) {
 
     greenStatus = 1;
@@ -113,10 +123,10 @@ void loop() {
 
     lcd.print("NOx: SAFE     ");
 
-    lastState = 0; // reset
+    lastState = 0;
   }
 
-  // ⚠️ WARNING
+  // ================= WARNING =================
   else if (gasValue < 2500) {
 
     greenStatus = 0;
@@ -132,12 +142,12 @@ void loop() {
     lcd.print("NOx: WARNING  ");
 
     if (lastState != 1) {
-      sendSMS("WARNING: Moderate vehicle emission detected. Please check and address it at the service station. Thank you!");
+      sendSMS("WARNING: Moderate vehicle emission detected. Please check at service station.");
       lastState = 1;
     }
   }
 
-  // 🔥 DANGER
+  // ================= DANGER =================
   else {
 
     greenStatus = 0;
@@ -155,6 +165,7 @@ void loop() {
     }
   }
 
+  // ================= LCD DISPLAY =================
   lcd.setCursor(0, 1);
   lcd.print("Value: ");
   lcd.print(gasValue);
@@ -163,7 +174,7 @@ void loop() {
   Serial.print("Gas Value: ");
   Serial.println(gasValue);
 
-  // 🌐 ThingSpeak Upload
+  // ================= THINGSPEAK =================
   if (WiFi.status() == WL_CONNECTED) {
 
     HTTPClient http;
@@ -184,5 +195,6 @@ void loop() {
     http.end();
   }
 
-  delay(15000);   // ThingSpeak interval
+  // ================= DELAY =================
+  delay(15000);   // ThingSpeak limit
 }
